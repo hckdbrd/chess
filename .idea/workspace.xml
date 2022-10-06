@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Add: mouseListener and mouseMotion implementation.">
+    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/ChessView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessModel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +119,7 @@
       <updated>1664961621517</updated>
       <workItem from="1664961622972" duration="3149000" />
       <workItem from="1664976945512" duration="8106000" />
-      <workItem from="1665002218725" duration="16797000" />
+      <workItem from="1665002218725" duration="18402000" />
     </task>
     <task id="LOCAL-00001" summary="Rename: Application and ChessPanel">
       <created>1665003383764</created>
@@ -181,7 +177,28 @@
       <option name="project" value="LOCAL" />
       <updated>1665090729807</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fix: moving figure animation">
+      <created>1665091591882</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665091591882</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add: atack logic&#10;Fix: moving figure animation">
+      <created>1665091661701</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1665091661701</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add: attack logic&#10;Fix: moving figure animation">
+      <created>1665091680385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665091680385</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +224,10 @@
     <MESSAGE value="Add: resizable window." />
     <MESSAGE value="Add: movePiece." />
     <MESSAGE value="Add: mouseListener and mouseMotion implementation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: mouseListener and mouseMotion implementation." />
+    <MESSAGE value="Fix: moving figure animation" />
+    <MESSAGE value="Add: atack logic&#10;Fix: moving figure animation" />
+    <MESSAGE value="Add: attack logic&#10;Fix: moving figure animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: attack logic&#10;Fix: moving figure animation" />
   </component>
   <component name="com.vaadin.designer2.intellij.settings.SizePresetsSettingsComponent">
     <option name="sizePresets">

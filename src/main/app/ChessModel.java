@@ -8,6 +8,8 @@ import java.util.Set;
 public class ChessModel {
    private final Set<ChessPiece> piecesBox = new HashSet<>();
 
+   private Player playerInTurn = Player.WHITE;
+
    void reset() {
 
       piecesBox.removeAll(piecesBox);
@@ -35,6 +37,7 @@ public class ChessModel {
       piecesBox.add(new ChessPiece(4, 0, Player.WHITE, Rank.KING, ChessConstants.wKing));
       piecesBox.add(new ChessPiece(4, 7, Player.BLACK, Rank.KING, ChessConstants.bKing));
 
+      playerInTurn = Player.WHITE;
    }
 
    ChessPiece pieceAt(int col, int row) {
@@ -48,7 +51,7 @@ public class ChessModel {
 
    public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
       ChessPiece candidate = pieceAt(fromCol, fromRow);
-      if (candidate == null) {
+      if (candidate == null || candidate.player != playerInTurn) {
          return;
       }
 
@@ -60,10 +63,9 @@ public class ChessModel {
             piecesBox.remove(target);
          }
       }
-
-
       candidate.col = toCol;
       candidate.row = toRow;
+      playerInTurn = playerInTurn == Player.WHITE ? Player.BLACK : Player.WHITE;
    }
 
    @Override
