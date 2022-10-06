@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Rename: Application and ChessPanel">
+    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Upd: pom.xml jupiter dependencies.">
+      <change afterPath="$PROJECT_DIR$/src/main/app/backend/pieces/ChessPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/chess.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/ChessView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/backend/pieces/Piece.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/backend/pieces/Piece.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +25,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -58,7 +68,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/pieces" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ChessController">
     <configuration name="ChessController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChessController" />
       <module name="chess" />
@@ -66,9 +76,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ChessModelTest.toStringTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="chess" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ChessModelTest" />
+      <option name="METHOD_NAME" value="toStringTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessModelTest.toStringTest1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="chess" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ChessModelTest" />
+      <option name="METHOD_NAME" value="toStringTest1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ChessController" />
+        <item itemvalue="JUnit.ChessModelTest.toStringTest" />
+        <item itemvalue="JUnit.ChessModelTest.toStringTest1" />
       </list>
     </recent_temporary>
   </component>
@@ -82,7 +114,7 @@
       <updated>1664961621517</updated>
       <workItem from="1664961622972" duration="3149000" />
       <workItem from="1664976945512" duration="8106000" />
-      <workItem from="1665002218725" duration="1200000" />
+      <workItem from="1665002218725" duration="7963000" />
     </task>
     <task id="LOCAL-00001" summary="Rename: Application and ChessPanel">
       <created>1665003383764</created>
@@ -91,7 +123,28 @@
       <option name="project" value="LOCAL" />
       <updated>1665003383764</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fix: gitignore">
+      <created>1665003449005</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1665003449005</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add: pom JUnit5">
+      <created>1665003619575</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1665003619575</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Upd: pom.xml jupiter dependencies.">
+      <created>1665071702203</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1665071702203</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,7 +163,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Rename: Application and ChessPanel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename: Application and ChessPanel" />
+    <MESSAGE value="Fix: gitignore" />
+    <MESSAGE value="Add: pom JUnit5" />
+    <MESSAGE value="Upd: pom.xml jupiter dependencies." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: pom.xml jupiter dependencies." />
   </component>
   <component name="com.vaadin.designer2.intellij.settings.SizePresetsSettingsComponent">
     <option name="sizePresets">

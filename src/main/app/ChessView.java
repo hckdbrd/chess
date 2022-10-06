@@ -1,14 +1,20 @@
+import backend.pieces.ChessPiece;
 import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serial;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessView extends JPanel {
+
+   @Serial
+   private static final long serialVersionUID = -2301877366965276449L;
+   ChessDelegate chessDelegate;
 
    int originX = 55;
    int originY = 45;
@@ -21,11 +27,13 @@ public class ChessView extends JPanel {
          "Pawn-white",
          "Knight-white",
          "Bishop-white",
+         "Rook-white",
          "Queen-white",
          "King-white",
          "Pawn-black",
          "Knight-black",
          "Bishop-black",
+         "Rook-black",
          "Queen-black",
          "King-black"
       };
@@ -44,13 +52,25 @@ public class ChessView extends JPanel {
 
       Graphics2D g2 = (Graphics2D) g;
       drawBoard(g2);
-      drawImage(g2, 0,0, "Pawn-black");
+
+      drawPieces(g2);
 
    }
 
-   private void drawImage(Graphics2D g2, int col, int row, String imgName) {
-      Image img = keyNameValueImage.get("Bishop-white");
-      g2.drawImage(img, originX+5 + col * cellSide, originY+5 + row * cellSide, cellSide-10, cellSide-10, null);
+   private void drawPieces(Graphics2D g2) {
+      for (int row = 7; row >= 0; row--) {
+         for (int col = 0; col < 8; col++) {
+            ChessPiece p = chessDelegate.pieceAt(col,row);
+            if (p != null) {
+               drawImage(g2, col, row, p.imageName);
+            }
+         }
+      }
+   }
+
+   private void drawImage(Graphics2D g2, int col, int row, String imageName) {
+      Image img = keyNameValueImage.get(imageName);
+      g2.drawImage(img, originX + 5 + col * cellSide, originY + 5 + row * cellSide, cellSide - 10, cellSide - 10, null);
    }
 
    @SneakyThrows
