@@ -16,9 +16,10 @@ public class ChessView extends JPanel {
    private static final long serialVersionUID = -2301877366965276449L;
    ChessDelegate chessDelegate;
 
-   int originX = 55;
-   int originY = 45;
-   int cellSide = 60;
+   double scaleFactor = 0.9d;
+   int originX = -1;
+   int originY = -1;
+   int cellSide = -1;
 
    Map<String, Image> keyNameValueImage = new HashMap<>();
 
@@ -50,6 +51,11 @@ public class ChessView extends JPanel {
    protected void paintChildren(Graphics g) {
       super.paintChildren(g);
 
+      int smaller = Math.min(getSize().width, getSize().height);
+      cellSide = (int) (smaller * scaleFactor / 8);
+      originX = (getSize().width - 8 * cellSide) / 2;
+      originY = (getSize().height - 8 * cellSide) / 2;
+
       Graphics2D g2 = (Graphics2D) g;
       drawBoard(g2);
 
@@ -58,9 +64,9 @@ public class ChessView extends JPanel {
    }
 
    private void drawPieces(Graphics2D g2) {
-      for (int row = 7; row >= 0; row--) {
+      for (int row = 0; row < 8; row++) {
          for (int col = 0; col < 8; col++) {
-            ChessPiece p = chessDelegate.pieceAt(col,row);
+            ChessPiece p = chessDelegate.pieceAt(col, row);
             if (p != null) {
                drawImage(g2, col, row, p.imageName);
             }
