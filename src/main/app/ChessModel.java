@@ -4,6 +4,7 @@ import backend.pieces.Rank;
 
 import java.util.HashSet;
 import java.util.Set;
+
 public class ChessModel {
    private final Set<ChessPiece> piecesBox = new HashSet<>();
 
@@ -17,14 +18,14 @@ public class ChessModel {
       }
 
       for (int i = 0; i < 2; i++) {
-         piecesBox.add(new ChessPiece(i*7, 0, Player.WHITE, Rank.ROOK, ChessConstants.wRook));
-         piecesBox.add(new ChessPiece(i*7, 7, Player.BLACK, Rank.ROOK, ChessConstants.bRook));
+         piecesBox.add(new ChessPiece(i * 7, 0, Player.WHITE, Rank.ROOK, ChessConstants.wRook));
+         piecesBox.add(new ChessPiece(i * 7, 7, Player.BLACK, Rank.ROOK, ChessConstants.bRook));
 
-         piecesBox.add(new ChessPiece(1+i*5, 0, Player.WHITE, Rank.KNIGHT, ChessConstants.wKnight));
-         piecesBox.add(new ChessPiece(1+i*5, 7, Player.BLACK, Rank.KNIGHT, ChessConstants.bKnight));
+         piecesBox.add(new ChessPiece(1 + i * 5, 0, Player.WHITE, Rank.KNIGHT, ChessConstants.wKnight));
+         piecesBox.add(new ChessPiece(1 + i * 5, 7, Player.BLACK, Rank.KNIGHT, ChessConstants.bKnight));
 
-         piecesBox.add(new ChessPiece(2+i*3, 0, Player.WHITE, Rank.BISHOP, ChessConstants.wBishop));
-         piecesBox.add(new ChessPiece(2+i*3, 7, Player.BLACK, Rank.BISHOP, ChessConstants.bBishop));
+         piecesBox.add(new ChessPiece(2 + i * 3, 0, Player.WHITE, Rank.BISHOP, ChessConstants.wBishop));
+         piecesBox.add(new ChessPiece(2 + i * 3, 7, Player.BLACK, Rank.BISHOP, ChessConstants.bBishop));
 
       }
 
@@ -45,6 +46,25 @@ public class ChessModel {
       return null;
    }
 
+   public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+      ChessPiece candidate = pieceAt(fromCol, fromRow);
+      if (candidate == null) {
+         return;
+      }
+
+      ChessPiece target = pieceAt(toCol, toRow);
+      if (target != null) {
+         if (target.player == candidate.player) {
+            return;
+         } else {
+            piecesBox.remove(target);
+         }
+      }
+
+
+      candidate.col = toCol;
+      candidate.row = toRow;
+   }
 
    @Override
    public String toString() {
@@ -73,12 +93,4 @@ public class ChessModel {
       return desc.toString();
    }
 
-   public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
-      ChessPiece candidate = pieceAt(fromCol, fromRow);
-      if (candidate == null) {
-         return;
-      }
-      candidate.col = toCol;
-      candidate.row = toRow;
-   }
 }

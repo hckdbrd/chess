@@ -5,7 +5,7 @@ import javax.swing.*;
 public class ChessController implements ChessDelegate {
 
    private final ChessModel chessModel = new ChessModel();
-   private ChessView panel;
+   private final ChessView panel;
    ChessController() {
       chessModel.reset();
 
