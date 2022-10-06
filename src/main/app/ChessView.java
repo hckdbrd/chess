@@ -4,44 +4,51 @@ import lombok.SneakyThrows;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.Serial;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessView extends JPanel {
+public class ChessView extends JPanel implements MouseListener {
 
    @Serial
    private static final long serialVersionUID = -2301877366965276449L;
-   ChessDelegate chessDelegate;
+   private final ChessDelegate chessDelegate;
 
-   double scaleFactor = 0.9d;
-   int originX = -1;
-   int originY = -1;
-   int cellSide = -1;
+   private int originX = -1;
+   private int originY = -1;
+   private int cellSide = -1;
 
-   Map<String, Image> keyNameValueImage = new HashMap<>();
+   private final Map<String, Image> keyNameValueImage = new HashMap<>();
 
-   public ChessView() {
+   int fromCol = -1;
+   int fromRow = -1;
+
+
+   ChessView(ChessDelegate chessDelegate) {
+      this.chessDelegate = chessDelegate;
       String[] imageNames = {
-         "Pawn-white",
-         "Knight-white",
-         "Bishop-white",
-         "Rook-white",
-         "Queen-white",
-         "King-white",
-         "Pawn-black",
-         "Knight-black",
-         "Bishop-black",
-         "Rook-black",
-         "Queen-black",
-         "King-black"
+         ChessConstants.wPawn,
+         ChessConstants.wKnight,
+         ChessConstants.wBishop,
+         ChessConstants.wRook,
+         ChessConstants.wQueen,
+         ChessConstants.wKing,
+         ChessConstants.bPawn,
+         ChessConstants.bKnight,
+         ChessConstants.bBishop,
+         ChessConstants.bRook,
+         ChessConstants.bQueen,
+         ChessConstants.bKing
       };
       for (String imgName : imageNames) {
          Image img = loadImage(imgName + ".png");
          keyNameValueImage.put(imgName, img);
       }
+      addMouseListener(this);
    }
 
    Color light = Color.decode("#E8EDF9");
@@ -51,8 +58,9 @@ public class ChessView extends JPanel {
    protected void paintChildren(Graphics g) {
       super.paintChildren(g);
 
-      int smaller = Math.min(getSize().width, getSize().height);
-      cellSide = (int) (smaller * scaleFactor / 8);
+      double scaleFactor = 0.9d;
+      int smallerWindowSide = Math.min(getSize().width, getSize().height);
+      cellSide = (int) (smallerWindowSide * scaleFactor / 8);
       originX = (getSize().width - 8 * cellSide) / 2;
       originY = (getSize().height - 8 * cellSide) / 2;
 
@@ -60,7 +68,6 @@ public class ChessView extends JPanel {
       drawBoard(g2);
 
       drawPieces(g2);
-
    }
 
    private void drawPieces(Graphics2D g2) {
@@ -106,5 +113,34 @@ public class ChessView extends JPanel {
    private void drawSquare(Graphics2D g2, int col, int row, Color color) {
       g2.setColor(color);
       g2.fillRect(originX + col * cellSide, originY + row * cellSide, cellSide, cellSide);
+   }
+
+   @Override
+   public void mouseClicked(MouseEvent e) {
+
+   }
+
+   @Override
+   public void mousePressed(MouseEvent e) {
+      fromCol = (e.getPoint().x - originX) / cellSide;
+      fromRow = (e.getPoint().y - originY) / cellSide;
+
+   }
+
+   @Override
+   public void mouseReleased(MouseEvent e) {
+      int toCol = (e.getPoint().x - originX) / cellSide;
+      int toRow = (e.getPoint().y - originY) / cellSide;
+      chessDelegate.movePiece(fromCol, fromRow, toCol, toRow);
+   }
+
+   @Override
+   public void mouseEntered(MouseEvent e) {
+
+   }
+
+   @Override
+   public void mouseExited(MouseEvent e) {
+
    }
 }

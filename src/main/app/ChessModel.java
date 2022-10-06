@@ -4,35 +4,35 @@ import backend.pieces.Rank;
 
 import java.util.HashSet;
 import java.util.Set;
-
 public class ChessModel {
-
    private final Set<ChessPiece> piecesBox = new HashSet<>();
 
    void reset() {
 
+      piecesBox.removeAll(piecesBox);
+
       for (int i = 0; i < 8; i++) {
-         piecesBox.add(new ChessPiece(i, 1, Player.WHITE, Rank.PAWN, "Pawn-white"));
-         piecesBox.add(new ChessPiece(i, 6, Player.BLACK, Rank.PAWN, "Pawn-black"));
+         piecesBox.add(new ChessPiece(i, 1, Player.WHITE, Rank.PAWN, ChessConstants.wPawn));
+         piecesBox.add(new ChessPiece(i, 6, Player.BLACK, Rank.PAWN, ChessConstants.bPawn));
       }
 
       for (int i = 0; i < 2; i++) {
-         piecesBox.add(new ChessPiece(i*7, 0, Player.WHITE, Rank.ROOK, "Rook-white"));
-         piecesBox.add(new ChessPiece(i*7, 7, Player.BLACK, Rank.ROOK, "Rook-black"));
+         piecesBox.add(new ChessPiece(i*7, 0, Player.WHITE, Rank.ROOK, ChessConstants.wRook));
+         piecesBox.add(new ChessPiece(i*7, 7, Player.BLACK, Rank.ROOK, ChessConstants.bRook));
 
-         piecesBox.add(new ChessPiece(1+i*5, 0, Player.WHITE, Rank.KNIGHT, "Knight-white"));
-         piecesBox.add(new ChessPiece(1+i*5, 7, Player.BLACK, Rank.KNIGHT, "Knight-black"));
+         piecesBox.add(new ChessPiece(1+i*5, 0, Player.WHITE, Rank.KNIGHT, ChessConstants.wKnight));
+         piecesBox.add(new ChessPiece(1+i*5, 7, Player.BLACK, Rank.KNIGHT, ChessConstants.bKnight));
 
-         piecesBox.add(new ChessPiece(2+i*3, 0, Player.WHITE, Rank.BISHOP, "Bishop-white"));
-         piecesBox.add(new ChessPiece(2+i*3, 7, Player.BLACK, Rank.BISHOP, "Bishop-black"));
+         piecesBox.add(new ChessPiece(2+i*3, 0, Player.WHITE, Rank.BISHOP, ChessConstants.wBishop));
+         piecesBox.add(new ChessPiece(2+i*3, 7, Player.BLACK, Rank.BISHOP, ChessConstants.bBishop));
 
       }
 
-      piecesBox.add(new ChessPiece(3, 0, Player.WHITE, Rank.QUEEN, "Queen-white"));
-      piecesBox.add(new ChessPiece(3, 7, Player.BLACK, Rank.QUEEN, "Queen-black"));
+      piecesBox.add(new ChessPiece(3, 0, Player.WHITE, Rank.QUEEN, ChessConstants.wQueen));
+      piecesBox.add(new ChessPiece(3, 7, Player.BLACK, Rank.QUEEN, ChessConstants.bQueen));
 
-      piecesBox.add(new ChessPiece(4, 0, Player.WHITE, Rank.KING, "King-white"));
-      piecesBox.add(new ChessPiece(4, 7, Player.BLACK, Rank.KING, "King-black"));
+      piecesBox.add(new ChessPiece(4, 0, Player.WHITE, Rank.KING, ChessConstants.wKing));
+      piecesBox.add(new ChessPiece(4, 7, Player.BLACK, Rank.KING, ChessConstants.bKing));
 
    }
 
@@ -71,5 +71,14 @@ public class ChessModel {
       }
       desc.append("  0 1 2 3 4 5 6 7");
       return desc.toString();
+   }
+
+   public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+      ChessPiece candidate = pieceAt(fromCol, fromRow);
+      if (candidate == null) {
+         return;
+      }
+      candidate.col = toCol;
+      candidate.row = toRow;
    }
 }

@@ -8,8 +8,13 @@ public class ChessModelTest {
    ChessModel chessModel = new ChessModel();
 
    @Test
-   public void PieceAtTest() {
+   public void movePieceTest() {
+      chessModel.reset();
+      chessModel.movePiece(0, 1, 0, 2);
+   }
 
+   @Test
+   public void PieceAtTest() {
       assertNull(chessModel.pieceAt(0, 0));
       chessModel.reset();
       assertNotNull(chessModel.pieceAt(0, 0));
