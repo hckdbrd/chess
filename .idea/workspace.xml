@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Add: resizable window.">
+    <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Add: movePiece.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/ChessDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/app/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/ChessView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ChessModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ChessModelTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessModel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ChessModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ChessModelTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +118,7 @@
       <updated>1664961621517</updated>
       <workItem from="1664961622972" duration="3149000" />
       <workItem from="1664976945512" duration="8106000" />
-      <workItem from="1665002218725" duration="14553000" />
+      <workItem from="1665002218725" duration="15839000" />
     </task>
     <task id="LOCAL-00001" summary="Rename: Application and ChessPanel">
       <created>1665003383764</created>
@@ -170,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665072879623</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add: movePiece.">
+      <created>1665089264756</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665089264756</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,7 +193,8 @@
     <MESSAGE value="Upd: pom.xml jupiter dependencies." />
     <MESSAGE value="Add: chess board with pieces." />
     <MESSAGE value="Add: resizable window." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: resizable window." />
+    <MESSAGE value="Add: movePiece." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: movePiece." />
   </component>
   <component name="com.vaadin.designer2.intellij.settings.SizePresetsSettingsComponent">
     <option name="sizePresets">
