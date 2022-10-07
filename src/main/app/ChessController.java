@@ -5,12 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.SocketChannel;
 import java.util.Scanner;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,7 +20,11 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
    private final ChessModel chessModel = new ChessModel();
    private final ChessView chessBoardPanel;
 
-   private JButton resetBtn, serverBtn, clientBtn;
+   private final JButton resetBtn;
+   private final JButton serverBtn;
+   private final JButton clientBtn;
+   private PrintWriter printWriter;
+   private Scanner scanner;
 
    ChessController() {
       chessModel.reset();
@@ -47,6 +52,14 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
 
       frame.setVisible(true);
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      frame.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            super.windowClosing(e);
+            printWriter.close();
+            scanner.close();
+         }
+      });
    }
 
    public static void main(String[] args) {
@@ -76,20 +89,7 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
          pool.execute(this) ;
       } else if (clientBtn.equals(source)) {
          try (var socket = new Socket("localhost", 50_000)) {
-            var in = new Scanner(socket.getInputStream());
-            var moveStr = in.nextLine();
-            var moveStrArr = moveStr.split(",");
-            var fromCol = Integer.parseInt(moveStrArr[0]);
-            var fromRow = Integer.parseInt(moveStrArr[1]);
-            var toCol = Integer.parseInt(moveStrArr[2]);
-            var toRow = Integer.parseInt(moveStrArr[3]);
-            SwingUtilities.invokeLater(new Runnable() {
-               @Override
-               public void run() {
-                  chessModel.movePiece(fromCol,fromRow,toCol,toRow);
-                  chessBoardPanel.repaint();
-               }
-            });
+            test(socket);
          }
       }
    }
@@ -100,9 +100,26 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
       try (ServerSocket host = new ServerSocket(50_000)) {
          while (true) {
             Socket socket = host.accept();
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println("Got you");
+            printWriter = new PrintWriter(socket.getOutputStream(), true);
+            test(socket);
+            printWriter.println("Got you");
          }
+      }
+   }
+
+   private void test(Socket socket) throws IOException {
+      scanner = new Scanner(socket.getInputStream());
+      while (scanner.hasNextLine()) {
+         var moveStr = scanner.nextLine();
+         var moveStrArr = moveStr.split(",");
+         var fromCol = Integer.parseInt(moveStrArr[0]);
+         var fromRow = Integer.parseInt(moveStrArr[1]);
+         var toCol = Integer.parseInt(moveStrArr[2]);
+         var toRow = Integer.parseInt(moveStrArr[3]);
+         SwingUtilities.invokeLater(() -> {
+            chessModel.movePiece(fromCol, fromRow, toCol, toRow);
+            chessBoardPanel.repaint();
+         });
       }
    }
 }
