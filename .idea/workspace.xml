@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="chess:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="868f3d61-6f61-49cc-a2a6-5fa2bcf1e7a0" name="Changes" comment="Add: SwingUtilities.invokeLater with socket">
+      <change afterPath="$PROJECT_DIR$/src/main/app/backend/pieces/ChessConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/ChessConstants.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/app/ChessView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/ChessView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/backend/pieces/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app/backend/pieces/ChessPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ChessModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ChessModelTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ChessModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ChessModelTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,10 +65,11 @@
     "extract.method.default.visibility": "private",
     "last_opened_file_path": "/Users/admin/IdeaProjects/chess/src/main/resources/pieces",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "Errors"
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "Errors",
+    "two.files.diff.last.used.file": "/Users/admin/IdeaProjects/chess/src/main/app/ChessView1.java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -65,7 +78,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.ChessController">
-    <configuration name="ChessController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ChessController" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChessController" />
       <module name="chess" />
       <method v="2">
@@ -102,6 +115,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.ChessController" />
+      <item itemvalue="JUnit.ChessModelTest.PieceAtTest" />
+      <item itemvalue="JUnit.ChessModelTest.toStringTest" />
+      <item itemvalue="JUnit.ChessModelTest.toStringTest1" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ChessController" />
@@ -122,6 +141,7 @@
       <workItem from="1664961622972" duration="3149000" />
       <workItem from="1664976945512" duration="8106000" />
       <workItem from="1665002218725" duration="25577000" />
+      <workItem from="1665175973931" duration="19456000" />
     </task>
     <task id="LOCAL-00001" summary="Rename: Application and ChessPanel">
       <created>1665003383764</created>

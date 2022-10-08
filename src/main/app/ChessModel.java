@@ -1,3 +1,4 @@
+import backend.pieces.ChessConstants;
 import backend.pieces.ChessPiece;
 import backend.pieces.Player;
 import backend.pieces.Rank;
@@ -12,37 +13,36 @@ public class ChessModel {
 
    void reset() {
 
-      piecesBox.removeAll(piecesBox);
+      piecesBox.clear();
 
       for (int i = 0; i < 8; i++) {
-         piecesBox.add(new ChessPiece(i, 1, Player.WHITE, Rank.PAWN, ChessConstants.wPawn));
-         piecesBox.add(new ChessPiece(i, 6, Player.BLACK, Rank.PAWN, ChessConstants.bPawn));
+         piecesBox.add(new ChessPiece(i, 1, Player.WHITE, Rank.PAWN, ChessConstants.W_PAWN));
+         piecesBox.add(new ChessPiece(i, 6, Player.BLACK, Rank.PAWN, ChessConstants.B_PAWN));
       }
 
       for (int i = 0; i < 2; i++) {
-         piecesBox.add(new ChessPiece(i * 7, 0, Player.WHITE, Rank.ROOK, ChessConstants.wRook));
-         piecesBox.add(new ChessPiece(i * 7, 7, Player.BLACK, Rank.ROOK, ChessConstants.bRook));
+         piecesBox.add(new ChessPiece(i * 7, 0, Player.WHITE, Rank.ROOK, ChessConstants.W_ROOK));
+         piecesBox.add(new ChessPiece(i * 7, 7, Player.BLACK, Rank.ROOK, ChessConstants.B_ROOK));
 
-         piecesBox.add(new ChessPiece(1 + i * 5, 0, Player.WHITE, Rank.KNIGHT, ChessConstants.wKnight));
-         piecesBox.add(new ChessPiece(1 + i * 5, 7, Player.BLACK, Rank.KNIGHT, ChessConstants.bKnight));
+         piecesBox.add(new ChessPiece(1 + i * 5, 0, Player.WHITE, Rank.KNIGHT, ChessConstants.W_KNIGHT));
+         piecesBox.add(new ChessPiece(1 + i * 5, 7, Player.BLACK, Rank.KNIGHT, ChessConstants.B_KNIGHT));
 
-         piecesBox.add(new ChessPiece(2 + i * 3, 0, Player.WHITE, Rank.BISHOP, ChessConstants.wBishop));
-         piecesBox.add(new ChessPiece(2 + i * 3, 7, Player.BLACK, Rank.BISHOP, ChessConstants.bBishop));
-
+         piecesBox.add(new ChessPiece(2 + i * 3, 0, Player.WHITE, Rank.BISHOP, ChessConstants.W_BISHOP));
+         piecesBox.add(new ChessPiece(2 + i * 3, 7, Player.BLACK, Rank.BISHOP, ChessConstants.B_BISHOP));
       }
 
-      piecesBox.add(new ChessPiece(3, 0, Player.WHITE, Rank.QUEEN, ChessConstants.wQueen));
-      piecesBox.add(new ChessPiece(3, 7, Player.BLACK, Rank.QUEEN, ChessConstants.bQueen));
+      piecesBox.add(new ChessPiece(3, 0, Player.WHITE, Rank.QUEEN, ChessConstants.W_QUEEN));
+      piecesBox.add(new ChessPiece(3, 7, Player.BLACK, Rank.QUEEN, ChessConstants.B_QUEEN));
 
-      piecesBox.add(new ChessPiece(4, 0, Player.WHITE, Rank.KING, ChessConstants.wKing));
-      piecesBox.add(new ChessPiece(4, 7, Player.BLACK, Rank.KING, ChessConstants.bKing));
+      piecesBox.add(new ChessPiece(4, 0, Player.WHITE, Rank.KING, ChessConstants.W_KING));
+      piecesBox.add(new ChessPiece(4, 7, Player.BLACK, Rank.KING, ChessConstants.B_KING));
 
       playerInTurn = Player.WHITE;
    }
 
    ChessPiece pieceAt(int col, int row) {
       for (ChessPiece chessPiece : piecesBox) {
-         if (chessPiece.col == col && chessPiece.row == row) {
+         if (chessPiece.getCol() == col && chessPiece.getRow() == row) {
             return chessPiece;
          }
       }
@@ -51,20 +51,20 @@ public class ChessModel {
 
    public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
       ChessPiece candidate = pieceAt(fromCol, fromRow);
-      if (candidate == null || candidate.player != playerInTurn) {
+      if (candidate == null || candidate.getPlayer() != playerInTurn) {
          return;
       }
 
       ChessPiece target = pieceAt(toCol, toRow);
       if (target != null) {
-         if (target.player == candidate.player) {
+         if (target.getPlayer() == candidate.getPlayer()) {
             return;
          } else {
             piecesBox.remove(target);
          }
       }
-      candidate.col = toCol;
-      candidate.row = toRow;
+      piecesBox.remove(candidate);
+      piecesBox.add(new ChessPiece(toCol, toRow, candidate.getPlayer(), candidate.getRank(), candidate.getImageName()));
       playerInTurn = playerInTurn == Player.WHITE ? Player.BLACK : Player.WHITE;
    }
 
@@ -79,13 +79,13 @@ public class ChessModel {
                desc.append(" .");
             } else {
                desc.append(" ");
-               switch (p.rank) {
-                  case PAWN -> desc.append(p.player == Player.WHITE ? "p" : "P");
-                  case BISHOP -> desc.append(p.player == Player.WHITE ? "b" : "B");
-                  case KNIGHT -> desc.append(p.player == Player.WHITE ? "n" : "N");
-                  case ROOK -> desc.append(p.player == Player.WHITE ? "r" : "R");
-                  case QUEEN -> desc.append(p.player == Player.WHITE ? "q" : "Q");
-                  case KING -> desc.append(p.player == Player.WHITE ? "k" : "K");
+               switch (p.getRank()) {
+                  case PAWN -> desc.append(p.getPlayer() == Player.WHITE ? "p" : "P");
+                  case BISHOP -> desc.append(p.getPlayer() == Player.WHITE ? "b" : "B");
+                  case KNIGHT -> desc.append(p.getPlayer() == Player.WHITE ? "n" : "N");
+                  case ROOK -> desc.append(p.getPlayer() == Player.WHITE ? "r" : "R");
+                  case QUEEN -> desc.append(p.getPlayer() == Player.WHITE ? "q" : "Q");
+                  case KING -> desc.append(p.getPlayer() == Player.WHITE ? "k" : "K");
                }
             }
          }

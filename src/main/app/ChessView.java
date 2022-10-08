@@ -13,38 +13,28 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import static backend.pieces.ChessConstants.*;
+
 public class ChessView extends JPanel implements MouseListener, MouseMotionListener {
 
    @Serial
    private static final long serialVersionUID = -2301877366965276449L;
+   private final Map<String, Image> keyNameValueImage = new HashMap<>();
    private final ChessDelegate chessDelegate;
-
+   private ChessPiece movingPiece;
+   private Point movingPiecePoint;
    private int originX = -1;
    private int originY = -1;
    private int cellSide = -1;
-
-   private final Map<String, Image> keyNameValueImage = new HashMap<>();
-
    private int fromCol = -1;
    private int fromRow = -1;
-   private ChessPiece movingPiece;
-   private Point movingPiecePoint;
 
    ChessView(ChessDelegate chessDelegate) {
       this.chessDelegate = chessDelegate;
+
       String[] imageNames = {
-         ChessConstants.wPawn,
-         ChessConstants.wKnight,
-         ChessConstants.wBishop,
-         ChessConstants.wRook,
-         ChessConstants.wQueen,
-         ChessConstants.wKing,
-         ChessConstants.bPawn,
-         ChessConstants.bKnight,
-         ChessConstants.bBishop,
-         ChessConstants.bRook,
-         ChessConstants.bQueen,
-         ChessConstants.bKing
+         W_PAWN, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,
+         B_PAWN, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING
       };
       for (String imgName : imageNames) {
          Image img = loadImage(imgName + ".png");
@@ -54,22 +44,16 @@ public class ChessView extends JPanel implements MouseListener, MouseMotionListe
       addMouseMotionListener(this);
    }
 
-   Color light = Color.decode("#E8EDF9");
-   Color dark = Color.decode("#B7C0D8");
-
    @Override
    protected void paintChildren(Graphics g) {
       super.paintChildren(g);
-
-      double scaleFactor = 0.9d;
       int smallerWindowSide = Math.min(getSize().width, getSize().height);
-      cellSide = (int) (smallerWindowSide * scaleFactor / 8);
+      cellSide = smallerWindowSide / 8;
       originX = (getSize().width - 8 * cellSide) / 2;
       originY = (getSize().height - 8 * cellSide) / 2;
 
       Graphics2D g2 = (Graphics2D) g;
       drawBoard(g2);
-
       drawPieces(g2);
    }
 
@@ -78,19 +62,29 @@ public class ChessView extends JPanel implements MouseListener, MouseMotionListe
          for (int col = 0; col < 8; col++) {
             ChessPiece p = chessDelegate.pieceAt(col, row);
             if (p != null && p != movingPiece) {
-               drawImage(g2, col, row, p.imageName);
+               drawImage(g2, col, row, p.getImageName());
             }
          }
       }
       if (movingPiece != null && movingPiecePoint != null) {
-         Image img = keyNameValueImage.get(movingPiece.imageName);
-         g2.drawImage(img, movingPiecePoint.x - cellSide / 2, movingPiecePoint.y - cellSide / 2, cellSide - 10, cellSide - 10, null);
+         Image img = keyNameValueImage.get(movingPiece.getImageName());
+         g2.drawImage(img,
+            movingPiecePoint.x - cellSide / 2,
+            movingPiecePoint.y - cellSide / 2,
+            cellSide,
+            cellSide,
+            null);
       }
    }
 
    private void drawImage(Graphics2D g2, int col, int row, String imageName) {
       Image img = keyNameValueImage.get(imageName);
-      g2.drawImage(img, originX + 5 + col * cellSide, originY + 5 + (7 - row) * cellSide, cellSide - 10, cellSide - 10, null);
+      g2.drawImage(img,
+         originX + 5 + col * cellSide,
+         originY + 5 + (7 - row) * cellSide,
+         cellSide - 10,
+         cellSide - 10,
+         null);
    }
 
    @SneakyThrows
@@ -109,17 +103,20 @@ public class ChessView extends JPanel implements MouseListener, MouseMotionListe
    private void drawBoard(Graphics2D g2) {
       for (int j = 0; j < 4; j++) {
          for (int i = 0; i < 4; i++) {
-            drawSquare(g2, 2 * i, 2 * j, light);
-            drawSquare(g2, 1 + 2 * i, 1 + 2 * j, light);
-            drawSquare(g2, 1 + 2 * i, 2 * j, dark);
-            drawSquare(g2, 2 * i, 1 + 2 * j, dark);
+            drawSquare(g2, 2 * i, 2 * j, LIGHT);
+            drawSquare(g2, 1 + 2 * i, 1 + 2 * j, LIGHT);
+            drawSquare(g2, 1 + 2 * i, 2 * j, DARK);
+            drawSquare(g2, 2 * i, 1 + 2 * j, DARK);
          }
       }
    }
 
    private void drawSquare(Graphics2D g2, int col, int row, Color color) {
       g2.setColor(color);
-      g2.fillRect(originX + col * cellSide, originY + row * cellSide, cellSide, cellSide);
+      g2.fillRect(
+         originX + col * cellSide,
+         originY + row * cellSide,
+         cellSide, cellSide);
    }
 
    @Override
@@ -132,7 +129,6 @@ public class ChessView extends JPanel implements MouseListener, MouseMotionListe
       fromCol = (e.getPoint().x - originX) / cellSide;
       fromRow = 7 - (e.getPoint().y - originY) / cellSide;
       movingPiece = chessDelegate.pieceAt(fromCol, fromRow);
-
    }
 
    @Override

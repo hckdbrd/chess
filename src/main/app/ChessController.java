@@ -1,7 +1,6 @@
 import backend.pieces.ChessPiece;
 import lombok.SneakyThrows;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,38 +11,47 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ChessController implements ChessDelegate, ActionListener, Runnable {
+import javax.swing.*;
+
+public class ChessController implements ChessDelegate, ActionListener {
+   private final String SOCKET_SERVER_ADDR = "192.168.31.133"; //localhost
+   private final int PORT = 50000;
 
    private final ChessModel chessModel = new ChessModel();
-   private final ChessView chessBoardPanel;
 
+   private final JFrame frame;
+   private final ChessView chessBoardPanel;
    private final JButton resetBtn;
    private final JButton serverBtn;
    private final JButton clientBtn;
+
+   private ServerSocket listener;
+   private Socket socket;
    private PrintWriter printWriter;
-   private Scanner scanner;
 
    ChessController() {
       chessModel.reset();
 
-      JFrame frame = new JFrame("Chess - GAMBIT");
-      frame.setSize(600, 600);
+      frame = new JFrame("Chess - GAMBIT");
+      frame.setSize(500, 550);
       frame.setLocationRelativeTo(null);
       frame.setLayout(new BorderLayout());
 
       chessBoardPanel = new ChessView(this);
+
       frame.add(chessBoardPanel, BorderLayout.CENTER);
 
-      JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+      var buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
       resetBtn = new JButton("Reset");
       resetBtn.addActionListener(this);
       buttonsPanel.add(resetBtn);
+
       serverBtn = new JButton("Host");
       serverBtn.addActionListener(this);
       buttonsPanel.add(serverBtn);
+
       clientBtn = new JButton("Connect");
       clientBtn.addActionListener(this);
       buttonsPanel.add(clientBtn);
@@ -51,13 +59,15 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
       frame.add(buttonsPanel, BorderLayout.PAGE_END);
 
       frame.setVisible(true);
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.addWindowListener(new WindowAdapter() {
          @Override
+         @SneakyThrows
          public void windowClosing(WindowEvent e) {
             super.windowClosing(e);
-            printWriter.close();
-            scanner.close();
+            if (printWriter != null) printWriter.close();
+            if (listener != null) listener.close();
+            if (socket != null) socket.close();
          }
       });
    }
@@ -75,42 +85,15 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
    public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
       chessModel.movePiece(fromCol, fromRow, toCol, toRow);
       chessBoardPanel.repaint();
-   }
-
-   @Override
-   @SneakyThrows
-   public void actionPerformed(ActionEvent e) {
-      Object source = e.getSource();
-      if (resetBtn.equals(source)) {
-         chessModel.reset();
-         chessBoardPanel.repaint();
-      } else if (serverBtn.equals(source)) {
-         ExecutorService pool = Executors.newFixedThreadPool(1);
-         pool.execute(this) ;
-      } else if (clientBtn.equals(source)) {
-         try (var socket = new Socket("localhost", 50_000)) {
-            test(socket);
-         }
+      if (printWriter != null) {
+         printWriter.println(fromCol + "," + fromRow + "," + toCol + "," + toRow);
       }
    }
 
-   @Override
-   @SneakyThrows
-   public void run() {
-      try (ServerSocket host = new ServerSocket(50_000)) {
-         while (true) {
-            Socket socket = host.accept();
-            printWriter = new PrintWriter(socket.getOutputStream(), true);
-            test(socket);
-            printWriter.println("Got you");
-         }
-      }
-   }
-
-   private void test(Socket socket) throws IOException {
-      scanner = new Scanner(socket.getInputStream());
+   private void receiveMove(Scanner scanner) {
       while (scanner.hasNextLine()) {
          var moveStr = scanner.nextLine();
+         System.out.println("WARNING: Chess move received: " + moveStr);
          var moveStrArr = moveStr.split(",");
          var fromCol = Integer.parseInt(moveStrArr[0]);
          var fromRow = Integer.parseInt(moveStrArr[1]);
@@ -120,6 +103,60 @@ public class ChessController implements ChessDelegate, ActionListener, Runnable 
             chessModel.movePiece(fromCol, fromRow, toCol, toRow);
             chessBoardPanel.repaint();
          });
+      }
+   }
+
+   private void runSocketServer() {
+      Executors.newFixedThreadPool(1).execute(new Runnable() {
+         @Override
+         @SneakyThrows
+         public void run() {
+            listener = new ServerSocket(PORT);
+            System.out.println("WARNING: Server is hosted on port " + PORT);
+            socket = listener.accept();
+            System.out.println("Connected from " + socket.getInetAddress());
+            printWriter = new PrintWriter(socket.getOutputStream(), true);
+            var scanner = new Scanner(socket.getInputStream());
+            receiveMove(scanner);
+         }
+      });
+   }
+
+   @SneakyThrows
+   private void runSocketClient() {
+      socket = new Socket(SOCKET_SERVER_ADDR, PORT);
+      System.out.println("Client connected to port " + PORT);
+      var scanner = new Scanner(socket.getInputStream());
+      printWriter = new PrintWriter(socket.getOutputStream(), true);
+      Executors.newFixedThreadPool(1).execute(() -> receiveMove(scanner));
+   }
+
+   @Override
+   @SneakyThrows
+   public void actionPerformed(ActionEvent e) {
+      if (e.getSource() == resetBtn) {
+         chessModel.reset();
+         chessBoardPanel.repaint();
+         if (listener != null) {
+            listener.close();
+         }
+         if (socket != null) {
+            socket.close();
+         }
+         serverBtn.setEnabled(true);
+         clientBtn.setEnabled(true);
+      } else if (e.getSource() == serverBtn) {
+         serverBtn.setEnabled(false);
+         clientBtn.setEnabled(false);
+         frame.setTitle("Chess - GAMBIT [Server]");
+         runSocketServer();
+         JOptionPane.showMessageDialog(frame, "listening on port " + PORT);
+      } else if (e.getSource() == clientBtn) {
+         serverBtn.setEnabled(false);
+         clientBtn.setEnabled(false);
+         frame.setTitle("Chess - GAMBIT [Client]");
+         runSocketClient();
+         JOptionPane.showMessageDialog(frame, "connected to port " + PORT);
       }
    }
 }
